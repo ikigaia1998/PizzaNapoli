@@ -1,0 +1,141 @@
+﻿@model IEnumerable<PizzaNapoli.Models.Registro>
+@{
+    ViewData["Title"] = "Canasta";
+}
+
+<h1 class="mt-4">Resumen del Pedido</h1>
+
+<p>
+
+    <a asp-action="Portal" class="btn btn-success">Seguir Comprando</a>
+    <button type="button" class="btn btn-success"
+            data-bs-toggle="modal" data-bs-target="#CompraPedido"
+            @(Model.Count() == 0 ? "disabled" : "")>
+        Registrar Pedido
+    </button>
+
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.id_pizza)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nombrepizza)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cantidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.monto)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+            <tr>
+
+                <td>
+
+                    @Html.DisplayFor(modelItem => item.id_pizza)
+
+                </td>
+
+                <td>
+
+                    @Html.DisplayFor(modelItem => item.nombrepizza)
+
+                </td>
+
+                <td>
+
+                    @Html.DisplayFor(modelItem => item.precio)
+
+                </td>
+
+                <td>
+
+                    @Html.DisplayFor(modelItem => item.descripcion)
+
+                </td>
+
+                <form asp-action="Actualizar" asp-controller="ECommerce" method="post">
+                    @Html.Hidden("codigo",item.id_pizza)
+                <td>
+
+                        @Html.TextBox("cantidad", item.cantidad, new { type = "number", min = 1,max=50, @class = "form-control" })
+
+
+                </td>
+
+                <td>
+
+                        @Html.DisplayFor(modelItem => item.monto)
+
+                </td>
+
+                <td>
+
+                    <input type="submit" value="Actualizar" class="btn btn-primary"> |
+
+                        @Html.ActionLink("Eliminar", "Eliminar", new { id=item.id_pizza }, new{@class="btn btn-success"  , onclick = "return confirm('¿Estás seguro de que deseas eliminar el registro?');" })
+
+                </td>
+
+                </form>
+
+            </tr>
+
+        }
+
+        <!--seccion del total del monto-->
+
+        <tr>
+
+            <td colspan="5">Monto Total del Pedido</td>
+
+            <td>@Model.Sum(x =>x.monto).ToString("#####.#0")</td>
+
+        </tr>
+    </tbody>
+</table>
+
+<!-- Modal -->
+<form asp-action="Compra" asp-controller="ECommerce" method="get">
+    <div class="modal fade" id="CompraPedido" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmación de Compra</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Contenido del modal -->
+                    @if (User.Identity.Name != "")
+                    {
+                        <h5>@User.Identity.Name</h5>
+                        <p>¿Estas de acuerdo con las pizzas de tu pedido?</p>
+                    }
+                    else
+                    {
+                        <p>No se pudo obtener el ID del usuario de la sesión.</p>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Registrar Pedido</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

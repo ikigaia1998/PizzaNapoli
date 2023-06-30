@@ -1,0 +1,56 @@
+﻿@model IEnumerable<PizzaNapoli.Models.HistorialPedido>
+
+<p>
+    <form asp-action="GenerarExcel" asp-controller="ECommerce" method="get">
+    <button class="btn  btn-primary">Generar reporte</button>
+    </form>
+</p>
+<table class="table align-content-center">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.idpedido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fechapedido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nombrepizza)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cantidadpedido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.monto)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.idpedido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fechapedido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombrepizza)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cantidadpedido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.precio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.monto)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

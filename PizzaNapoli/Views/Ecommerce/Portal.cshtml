@@ -1,0 +1,42 @@
+﻿@model IEnumerable<PizzaNapoli.Models.Pizza>
+@{
+    ViewData["Title"] = "Portal";
+}
+
+<link rel="stylesheet" href="~/css/portal.css" />
+
+
+<div class="container">
+    <h1 class="text-center">Pizzeria</h1>
+
+    <div class="d-flex justify-content-between align-items-center my-4">
+        <div>
+            <a asp-action="Compra" class="btn btn-primary">Ir a Comprar</a>
+        </div>
+
+        <div>
+            <form asp-action="Portal" asp-controller="Ecommerce" method="post">
+                
+                @Html.TextBox("nombre", "", new { @class = "form-control d-inline-block w-auto" ,@placeholder="Buscar pizzas"})
+                <button class="btn btn-primary">Ir</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3 mb-3">
+                <div class="card">
+                    <img src="@Url.Content($"~/imagenes/{item.id_pizza}.webp")" class="card-img" alt="Pizza Image">
+                    <div class="card-body">
+                        <h3 class="card-title">@Html.DisplayFor(modelItem => item.nombrepizza)</h3>
+                        <p class="card-price">@Html.DisplayFor(modelItem => item.precio)</p>
+                        <p class="card-description">@Html.DisplayFor(modelItem => item.descripcion)</p>
+                        <a href="@Url.Action("Seleccionar", new { id = item.id_pizza })" class="btn btn-success">Agregar al Carrito</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

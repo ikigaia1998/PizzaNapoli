@@ -1,0 +1,83 @@
+﻿@model PizzaNapoli.Models.Usuario
+
+@{
+    ViewData["Title"] = "Registrar";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso al Sistema</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/auth.css" />
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+        }
+
+        .img-container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="container">
+    <div class="container text-light">
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <h1 class="text-center">Registrar</h1>
+                <hr />
+                <form asp-action="Registrar">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="mb-3">
+                        <label asp-for="nombreusuario" class="form-label">Nombre de Usuario</label>
+                        <input asp-for="nombreusuario" class="form-control" required placeholder="Ingresa tus nombres" />
+                        <span asp-validation-for="nombreusuario" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="contrasenausuario" class="form-label">Contraseña</label>
+                        <input asp-for="contrasenausuario" class="form-control" required placeholder="Ingresa una contraseña" />
+                        <span asp-validation-for="contrasenausuario" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="emailusuario" class="form-label">Email</label>
+                        <input asp-for="emailusuario" class="form-control" required type="email" placeholder="Ingresa un correo electrónico" />
+                        <span asp-validation-for="emailusuario" class="text-danger"></span>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <input type="submit" value="Registrar" class="btn btn-primary" />
+                    </div>
+                    @if (!string.IsNullOrEmpty(ViewBag.mensaje))
+                    {
+                        <div class="alert alert-success mt-2" role="alert">
+                            @ViewBag.mensaje
+                        </div>
+                    }
+                </form>
+                <div class="mt-3 text-center">
+                    <p class="text-center mt-2">
+                        ¿Ya tienes una cuenta?
+                        <a asp-action="Index" class="fw-bold text-body"><u>Ingresa aquí</u></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="img-container">
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp" class="img-fluid" alt="Sample image">
+    </div>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

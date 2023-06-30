@@ -1,0 +1,68 @@
+﻿@model PizzaNapoli.Models.Pizza
+@{
+    ViewData["Title"] = "Seleccionar";
+}
+
+<h1>Seleccionar</h1>
+<div style="display:flex; flex-direction:row;">
+    <div style="display:inherit;justify-content:space-between; margin:20px 0px">
+        <div>
+            <h4>Producto</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.id_pizza)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.id_pizza)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.nombrepizza)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.nombrepizza)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.precio)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.precio)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.descripcion)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.descripcion)
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <div>
+        <div style="text-align: right;  ">
+            <img style="width:250px; height:250px" src="@Url.Content($"~/imagenes/{Model.id_pizza}.webp")">
+        </div>
+
+    </div>
+
+</div>
+
+<div>
+    <form asp-action="Seleccionar" method="post">
+        @Html.Hidden("codigo",Model.id_pizza)
+        <div>
+            <em>Ingrese la Cantidad:</em>
+            @Html.TextBox("cantidad",1,new{type="number",min=1,max=50})
+        </div>
+        <br />
+        <br />
+        <div>
+            <input type="submit" value="Agregar" class="btn btn-primary" @(ViewBag.DeshabilitarBoton==true?"disabled":"") />
+            <a asp-action="Portal" class="btn btn-success">Retornar</a>
+        </div>
+    </form>
+</div>
+
+<div>
+    @ViewBag.mensaje
+</div>
